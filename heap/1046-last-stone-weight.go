@@ -1,6 +1,10 @@
 package heap
 
-import "container/heap"
+import (
+	"container/heap"
+	"fmt"
+	"sort"
+)
 
 type IntHeap []int
 
@@ -44,4 +48,23 @@ func abs(x int) int {
 		return -x
 	}
 	return x
+}
+
+func lastStoneWeightOpt(stones []int) int {
+	sort.Ints(stones)
+	for len(stones) > 1 {
+		fmt.Println(stones)
+		e1, e2 := stones[len(stones)-1], stones[len(stones)-2]
+		if e1 == e2 {
+			stones = stones[:len(stones)-2]
+		} else {
+			stones[len(stones)-2] = stones[len(stones)-1] - stones[len(stones)-2]
+			stones = stones[:len(stones)-1]
+		}
+		sort.Ints(stones)
+	}
+	if len(stones) > 0 {
+		return stones[0]
+	}
+	return 0
 }
